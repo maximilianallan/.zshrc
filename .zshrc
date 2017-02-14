@@ -1,43 +1,23 @@
-# Skip all this for non-interactive shells
-[[ -z "$PS1" ]] && return
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Add some library paths
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/
-export PATH=/usr/local/cuda/bin:${PATH}
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64:/usr/local/cuda/lib
-export PATH=/home/max/program_files/thunderbird2:$PATH
-
-# User set path vars
-export PATH=$PATH:/usr/local/MATLAB/R2012a/bin
-export PATH=$PATH:~/scripts/python
-export PATH=$PATH:/usr/bin/python
-export PATH=$PATH:~/program_files/Zotero_linux-x86_64
-export CURR=/home/max/Documents/projects/2012/tool_tracking/surgical_tool_tracking/
-export DATA=/home/max/Documents/projects/data_sets
-
-
-#accept cmicdev self-signed certificate
-export GIT_SSL_NO_VERIFY=1
-
-#automount cs drive if not mounted
-if [ -d /home/max/cs_mount/Documents ]; then
-    #drive already mounted
-else
-    sshfs mallan@storm.cs.ucl.ac.uk:/cs/research/medic/home2/paramedic/mallan /home/max/cs_mount -o idmap=user,IdentityFile=/home/max/.ssh/id_rsa.cs,reconnect,transform_symlinks
-    echo "Mounted the cs drive"
+if [ -d /usr/local/texlive/2016/bin/x86_64-linux ]; then
+    export PATH=/usr/local/texlive/2016/bin/x86_64-linux:$PATH
 fi
 
-# Set prompt (white and purple, nothing too fancy)
-#PS1=$'%{\e[0;37m%}%B%*%b %{\e[0;35m%}%m:%{\e[0;37m%}%~ %(!.#.>) %{\e[00m%}'
-# Fancier prompt
-# Exit status indicator in red (if not 0)
-# Job count in yellow (if not 0)
-# Date in white, host in magenta, directory in default, prompt character
-# Example:   
-#     1J 23:06:26 ig:~ >
-#PS1=$'%F{def}%(?..%B%K{red}[%?]%K{def}%b )%(1j.%b%K{yel}%F{bla}%jJ%F{def}%K{def} .)%F{white}%B%*%b %F{m}%m:%F{white}%~ %(!.#.>) %F{def}'
+if [ -d $HOME/dev/cv_utils ]; then
+    export PYTHONPATH=$PYTHONPATH:$HOME/dev/cv_utils
+fi
 
-PS1=$'%F{def}%(?..%B%K{red}[%?]%K{def}%b )%(1j.%b%K{yel}%F{bla}%jJ%F{def}%K{def} .)%F{white}%B%*%b %F{m}%n@%m: %F{white}%(!.#.>) %F{def}'
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+ZSH_THEME="nodeys"
+
+export GREP_OPTIONS='--directories=recurse'
 
 # Set less options
 if [[ -x $(which less) ]]
@@ -133,7 +113,6 @@ alias 'vnice=nice -n 20 ionice -c 3'
 alias "tree=tree -A -I 'CVS|*~'"
 alias 'open=gnome-open'
 alias 'top=htop'
-alias 'rm=~/scripts/bash/trashit'
 
 
 #run emacs in read only mode
@@ -324,7 +303,10 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
     avahi Debian-exim hplip list cupsys haldaemon ntpd proftpd statd
 
 # Hostname completion
-zstyle ':completion:*' hosts $( cat $HOME/.hosts* )
+if [ -f "$HOME/.hosts" ]
+then
+    zstyle ':completion:*' hosts $( cat $HOME/.hosts* )
+fi
 
 # File/directory completion, for cd command
 zstyle ':completion:*:cd:*' ignored-patterns '(*/)#lost+found' '(*/)#CVS'
@@ -472,6 +454,79 @@ fi
 
 # Get round annoyance in Gentoo
 # (No idea if this is needed any more)
-source $HOME/.zshenv
+if [ -f "$HOME/.zshenv" ]
+then
+    source $HOME/.zshenv
+fi
 
+
+
+
+
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
+
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git python svn)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
 
