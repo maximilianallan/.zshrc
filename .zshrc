@@ -111,8 +111,9 @@ alias 'grep=grep --colour'
 alias 'e=emacs -nw --quick'
 alias 'vnice=nice -n 20 ionice -c 3'
 alias "tree=tree -A -I 'CVS|*~'"
-alias 'open=gnome-open'
+alias 'open=xdg-open'
 alias 'top=htop'
+alias xclip="xclip -selection c"
 
 
 #run emacs in read only mode
