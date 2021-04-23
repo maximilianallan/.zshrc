@@ -17,8 +17,6 @@ export ZSH=$HOME/.oh-my-zsh
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="nodeys"
 
-export GREP_OPTIONS='--directories=recurse'
-
 # Set less options
 if [[ -x $(which less) ]]
 then
